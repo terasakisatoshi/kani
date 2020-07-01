@@ -4,11 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: jupyterlab
+    container_name: kani-lab
     environment:
       - TZ=Asia/Tokyo
       - JUPYTER_ENABLE_LAB=yes
     ports:
       - 8888:8888
     volumes:
-      - ${PWD}/work:/home/jovyan/work
+      - ${PWD}:/home/jovyan/work
