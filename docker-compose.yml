@@ -1,0 +1,14 @@
+version: "3"
+services:
+  lab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jupyterlab
+    environment:
+      - TZ=Asia/Tokyo
+      - JUPYTER_ENABLE_LAB=yes
+    ports:
+      - 8888:8888
+    volumes:
+      - ${PWD}/work:/home/jovyan/work
