@@ -48,13 +48,18 @@ RUN jupyter labextension install @lckr/jupyterlab_variableinspector --no-build &
 
 # Set color theme Monokai++ by default (This choice comes from my preference.)
 RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension && \
-    echo '{ "theme": "Monokai++"}' \
+    echo '{ "theme": "JupyterLab Dark"}' \
     >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
 
 # Show line numbers by default
 RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension && \
     echo '{"codeCellConfig": {"lineNumbers": true,},}' \
     >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings
+
+# assig `Alt-R` restart run all command 
+RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension && echo '\
+{"shortcuts": [{"command": "runmenu:restart-and-run-all","keys":["Alt R"],"selector": "[data-jp-code-runner]"}]}' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension/shortcuts.jupyterlab-settings
+
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

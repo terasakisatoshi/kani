@@ -10,5 +10,6 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     ports:
       - 8888:8888
+    working_dir: /home/jovyan/work
     volumes:
       - ${PWD}:/home/jovyan/work
