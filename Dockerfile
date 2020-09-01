@@ -69,6 +69,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     cmake \
+    libssl-dev pkg-config # cargo-edit \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -85,3 +86,5 @@ RUN rustup --version; \
 ## Install Evcxr
 RUN cargo install evcxr_jupyter && \
     evcxr_jupyter --install
+
+RUN cargo install cargo-edit
