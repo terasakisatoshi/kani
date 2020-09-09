@@ -30,3 +30,6 @@ fn sample() {
 
     println!("{:?}", a);
 }
+// -
+
+sample();
