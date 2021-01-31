@@ -11,12 +11,6 @@ RUN conda install -y -c conda-forge \
     && \
     conda clean --all -f -y
 
-RUN echo "\
-c.ContentsManager.default_jupytext_formats = 'ipynb,rs'; \
-c.NotebookApp.contents_manager_class = 'jupytext.TextFileContentsManager'; \
-c.NotebookApp.open_browser = False; \
-" >> ${HOME}/.jupyter/jupyter_notebook_config.py
-
 # prepare to install extension
 RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbextensions_configurator enable --sys-prefix && \
@@ -30,20 +24,22 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbextension enable execute_time/ExecuteTime --sys-prefix && \
     echo Done
 
+USER root
+RUN jupyter server extension enable --py jupyterlab_code_formatter
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
+
 # Install/enable extension for JupyterLab users
-RUN jupyter labextension install @lckr/jupyterlab_variableinspector --no-build && \
-    jupyter labextension install @jupyterlab/toc --no-build && \
-    jupyter nbextension enable --py widgetsnbextension && \
+RUN jupyter labextension install @jupyterlab/toc --no-build && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
     jupyter labextension install @z-m-k/jupyterlab_sublime --no-build && \
-    jupyter labextension install @ryantam626/jupyterlab_code_formatter --no-build && \
-    jupyter serverextension enable --py jupyterlab_code_formatter && \
     jupyter labextension install @hokyjack/jupyterlab-monokai-plus --no-build && \
+    jupyter labextension install jupyterlab-jupytext --no-build && \
     jupyter lab build -y && \
     jupyter lab clean -y && \
     npm cache clean --force && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
-    rm -rf /home/$NB_USER/.node-gyp && \
+    rm -rf ${HOME}/.cache/yarn && \
+    rm -rf ${HOME}/.node-gyp && \
     echo Done
 
 # Set color theme Monokai++ by default (This choice comes from my preference.)
