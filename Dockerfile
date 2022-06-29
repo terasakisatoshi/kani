@@ -30,7 +30,7 @@ RUN jupyter labextension install @jupyterlab/toc --no-build && \
 
 # Set color theme Monokai++ by default (This choice comes from my preference.)
 RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension && \
-    echo '{ "theme": "Monokai++"}' \
+    echo '{ "theme": "JupyterLab Dark" }' \
     >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
 
 # Show line numbers by default
