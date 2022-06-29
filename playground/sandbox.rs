@@ -1,17 +1,3 @@
-// ---
-// jupyter:
-//   jupytext:
-//     text_representation:
-//       extension: .rs
-//       format_name: light
-//       format_version: '1.5'
-//       jupytext_version: 1.5.2
-//   kernelspec:
-//     display_name: Rust
-//     language: rust
-//     name: rust
-// ---
-
 println!("Hello World");
 
 // +

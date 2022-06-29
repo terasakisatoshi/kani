@@ -11,21 +11,7 @@ RUN conda install -y -c conda-forge \
     && \
     conda clean --all -f -y
 
-# prepare to install extension
-RUN jupyter contrib nbextension install --sys-prefix && \
-    jupyter nbextensions_configurator enable --sys-prefix && \
-    # enable extensions what you want
-    jupyter nbextension enable select_keymap/main --sys-prefix && \
-    jupyter nbextension enable highlight_selected_word/main --sys-prefix && \
-    jupyter nbextension enable toggle_all_line_numbers/main --sys-prefix && \
-    jupyter nbextension enable varInspector/main --sys-prefix && \
-    jupyter nbextension enable toc2/main --sys-prefix && \
-    jupyter nbextension enable equation-numbering/main --sys-prefix && \
-    jupyter nbextension enable execute_time/ExecuteTime --sys-prefix && \
-    echo Done
-
 USER root
-RUN jupyter server extension enable --py jupyterlab_code_formatter
 RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 
@@ -44,7 +30,7 @@ RUN jupyter labextension install @jupyterlab/toc --no-build && \
 
 # Set color theme Monokai++ by default (This choice comes from my preference.)
 RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension && \
-    echo '{ "theme": "JupyterLab Dark"}' \
+    echo '{ "theme": "Monokai++"}' \
     >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
 
 # Show line numbers by default
@@ -56,6 +42,7 @@ RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension &
 RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension && echo '\
 {"shortcuts": [{"command": "runmenu:restart-and-run-all","keys":["Alt R"],"selector": "[data-jp-code-runner]"}]}' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension/shortcuts.jupyterlab-settings
 
+RUN wget https://raw.githubusercontent.com/mwouts/jupytext/main/binder/labconfig/default_setting_overrides.json -P  ~/.jupyter/labconfig/
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -65,7 +52,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     cmake \
-    libssl-dev pkg-config # cargo-edit \
+    libssl-dev pkg-config \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

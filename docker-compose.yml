@@ -1,9 +1,7 @@
 version: "3"
 services:
   lab:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: kani
     container_name: kani-lab
     environment:
       - TZ=Asia/Tokyo
