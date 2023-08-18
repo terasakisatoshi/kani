@@ -53,10 +53,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     cmake \
     libssl-dev pkg-config \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-USER 1000
+USER ${NB_USER}
 # Setup Rust
 # Reference: https://github.com/rust-lang/rustup/issues/297
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
